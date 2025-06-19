@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Prediction Result</h1>
+        </header>
+        <main class="result-main">
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% else %}
+                <div class="result-card {{ predicted_class.lower() }}">
+                    <h2>The model predicts: <span class="prediction-text">{{ predicted_class }}</span></h2>
+                    <p>Confidence: {{ "%.2f"|format(confidence) }}%</p>
+                </div>
+                <div class="image-display">
+                    <h3>Uploaded Image:</h3>
+                    <img src="{{ url_for('uploaded_file', filename=image_filename) }}" alt="Uploaded X-ray">
+                </div>
+            {% endif %}
+            <a href="/" class="button-link">Try another image</a>
+        </main>
+        <footer>
+            <p>Powered by a Keras/TensorFlow Model with a VGG16 base.</p>
+        </footer>
+    </div>
+</body>
+</html>

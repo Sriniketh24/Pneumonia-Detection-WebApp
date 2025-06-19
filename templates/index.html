@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pneumonia Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pneumonia Detection from X-Ray Images</h1>
+            <p>Upload a chest X-ray image to get a prediction.</p>
+        </header>
+
+        <!-- IMPORTANT DISCLAIMER ADDED HERE -->
+        <div class="disclaimer">
+            <p><strong>Important:</strong> This model is designed to work ONLY with chest X-ray images. Results on other types of images (like photos, drawings, etc.) will be unreliable and are for demonstration purposes only.</p>
+        </div>
+
+        <main>
+            <form method="post" enctype="multipart/form-data">
+                <div class="file-upload-wrapper">
+                    <label for="file-upload" class="file-upload-label">
+                        <span>Click to choose an image...</span>
+                    </label>
+                    <input id="file-upload" name="file" type="file" onchange="updateFileName(this)">
+                </div>
+                <button type="submit">Predict</button>
+            </form>
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+            <p id="file-name-display"></p>
+        </main>
+        <footer>
+            <p>Powered by a Keras/TensorFlow Model with a VGG16 base.</p>
+        </footer>
+    </div>
+    <script>
+        function updateFileName(input) {
+            const fileNameDisplay = document.getElementById('file-name-display');
+            if (input.files.length > 0) {
+                fileNameDisplay.textContent = `Selected file: ${input.files[0].name}`;
+            } else {
+                fileNameDisplay.textContent = '';
+            }
+        }
+    </script>
+</body>
+</html>
